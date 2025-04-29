@@ -1,0 +1,9 @@
+body {
+    margin: 0;
+}
+
+#header {
+    background-color: rgb(14, 63, 138);
+    width: 100%;
+    height: 13vh;
+}
