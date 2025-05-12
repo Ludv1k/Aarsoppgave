@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+import pymysql #type: ignore
 import re
 
 # Create the Flask app
