@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import pymysql #type: ignore
 import hashlib
 import re
 
 # Create the Flask app
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 
 def connect_db():
     return pymysql.connect(
-        host="192.168.86.23",
+        # host="192.168.86.23",
+        host="10.2.2.138",
         user="admin",
         password="strongpassword",
         database="testing",
@@ -35,7 +37,7 @@ def signup():
         password = request.form['password']
 
         if not is_valid_email(email):
-            return "Invalid email format", 400
+            flash("Invalid email format"), 400
 
         hashed_pw = hash_password(password)
 
@@ -49,6 +51,31 @@ def signup():
         return redirect(url_for('root')) #redirect after signing up
     
     return render_template('signup.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        hashed_pw = hash_password(password)
+
+        db = connect_db()
+        with db.cursor() as cursor:
+            sql = "SELECT name FROM users WHERE email = %s AND password = %s"
+            cursor.execute(sql, (email, hashed_pw))
+            user = cursor.fetchone()
+        db.close()
+
+        if user:
+            session['name'] = user['name']
+            flash(f"Welcome back, {user['name']}!", "success")
+            return redirect(url_for('root'))
+        else:
+            flash("Invalid email or password", "danger")
+            return redirect(url_for('login'))
+    
+    return render_template('login.html')
 
 # Run the Flask app
 if __name__ == '__main__':

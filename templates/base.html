@@ -14,6 +14,15 @@
         <button id="signup">Sign up</button>
         <button id="test2">Nothing</button>
     </div>
+
+    {% if session.name %}
+        <h2>Welcome, {{ session.name }}!</h2>
+        <a href="href={{url_for('root')}}">Logout</a>
+    {% else %}
+        <p>You are not logged in.</p>
+        <a href="{{ url_for('login')}}">Login</a>
+    {% endif %}
+
 </div>
     {% block body %}
     {% endblock %}
