@@ -9,8 +9,8 @@ app.secret_key = 'your_secret_key'
 
 def connect_db():
     return pymysql.connect(
-        # host="192.168.86.23",
-        host="10.2.2.138",
+        host="192.168.86.33",
+        # host="10.2.2.138",
         user="admin",
         password="strongpassword",
         database="testing",
@@ -27,7 +27,8 @@ def is_valid_email(email):
 # Create route
 @app.route('/')
 def root():
-    return render_template('base.html')
+    name = session.get('name')
+    return render_template('base.html', name=name)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -57,7 +58,6 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-
         hashed_pw = hash_password(password)
 
         db = connect_db()
@@ -69,13 +69,19 @@ def login():
 
         if user:
             session['name'] = user['name']
-            flash(f"Welcome back, {user['name']}!", "success")
+            flash("Login successful!", "success")
             return redirect(url_for('root'))
         else:
             flash("Invalid email or password", "danger")
             return redirect(url_for('login'))
     
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You have been logged out', 'info')
+    return redirect(url_for('root'))
 
 # Run the Flask app
 if __name__ == '__main__':
