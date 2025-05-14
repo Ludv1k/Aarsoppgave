@@ -13,7 +13,7 @@ def connect_db():
         # host="10.2.2.138",
         user="admin",
         password="strongpassword",
-        database="testing",
+        database="dreadthreads",
         cursorclass=pymysql.cursors.DictCursor
     )
 
@@ -66,7 +66,7 @@ def login():
             cursor.execute(sql, (email, hashed_pw))
             user = cursor.fetchone()
         db.close()
-
+        
         if user:
             session['name'] = user['name']
             flash("Login successful!", "success")
