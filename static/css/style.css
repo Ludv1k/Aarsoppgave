@@ -1,9 +1,86 @@
 body {
     margin: 0;
+    background-color: #0f0d1f;
+    color: white;
+}
+
+.cartTab {
+    width: 20vw;
+    background-color: #273146;
+    color: #eee;
+    position: fixed;
+    /* inset: 0 -20vw 0 auto; */
+    inset: 0 0 0 auto; /* DELETE THIS LINE AND UNCOMMENT THE ONE ABOVE*/
+    display: flex;
+    flex-direction: column;
+    transition: inset 0.5s;
+    z-index: 999;
+}
+
+body.showCart .cartTab {
+    inset: 0 0 0 auto;
+}
+
+.cartTab h1 {
+    padding: 4%;
+    margin: 0;
+}
+
+.cartTab .btn button {
+    border: none;
+    cursor: pointer;
+}
+
+.cartTab .btn .close {
+    background-color: white;
+    color: black;
+    position:  fixed;
+    top: 93vh;
+    
+    height: 7vh;
+    width: 20vw;
+}
+
+.sidebar-toggle button{
+    border: none;
+    background-color: transparent;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sidebar-toggle svg {
+    height: 5vh;
+    width: auto;
+}
+
+.sidebar-content {
+    margin-left: 2vw;
 }
 
 #header {
-    background-color: rgb(14, 63, 138);
+    background-color: #2f382a92;
     width: 100%;
     height: 13vh;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.header_placement {
+    width: 50%;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo {
+    height: 12vh;
+    width: auto;
+    color: white;
 }

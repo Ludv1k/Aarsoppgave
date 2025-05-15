@@ -12,3 +12,11 @@ nav_login.addEventListener("click", login_page)
 function login_page() {
     location.href = '/login'
 }
+
+document.getElementById('openSidebar').addEventListener('click', () => {
+    document.body.classList.toggle('showCart');
+});
+
+document.querySelector('.cartTab .close').addEventListener('click', () => {
+    document.body.classList.remove('showCart');
+});
