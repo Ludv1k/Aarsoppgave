@@ -7,51 +7,66 @@
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-<div id="header">
-    <div class="header_placement">
-        <div class="logo_placement">
-            <img src="../static/Logo/White/DreadThreadsLogo_Symbol_White.svg" alt="Dread Threads Logo Symbol" id="logo">
+<div class="wrapper">
+    <div id="header">
+        <div class="header_placement">
+            <div id="logo_nav">
+                <img src="../static/Logo/White/DreadThreadsLogo_Symbol_White.svg" alt="Dread Threads Logo Symbol" id="logo">
+                <img src="../static/Logo/White/DreadThreadsLogo_Text_Vertical_White.svg" alt="Dread Threads Logo Text" id="logo">
+            </div>
         
-            <img src="../static/Logo/White/DreadThreadsLogo_Text_Vertical_White.svg" alt="Dread Threads Logo Text" id="logo">
+            <div>
+                <!-- Sidebar Toggle Button -->
+                <div class="sidebar-toggle">
+                    <button id="openSidebar"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg></button>
+                </div>
+            </div>
+        
         </div>
-
+    
+    </div>
+    
+        <!-- Sidebar -->
+    <div class="cartTab">
         <div>
-            <!-- Sidebar Toggle Button -->
-            <div class="sidebar-toggle">
-                <button id="openSidebar"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                </svg></button>
+            {% if name %}
+                <h1 class="user">Welcome, {{ name }}!</h1>
+                <a href="href={{url_for('logout')}}">Logout</a>
+            {% else %}
+                <h1>You are not logged in.</h1>
+            {% endif %}
+        </div>
+        <div class="sidebar-content">
+            <div id="log_sign_btn">
+                <button id="signup">Sign up</button>
+                <button id="login">Login</button>
             </div>
         </div>
-
-    </div>
-
-</div>
-
-    <!-- Sidebar -->
-<div class="cartTab">
-    <div>
-        {% if name %}
-            <h1 class="user">Welcome, {{ name }}!</h1>
-            <a href="href={{url_for('logout')}}">Logout</a>
-        {% else %}
-            <h1>You are not logged in.</h1>
-        {% endif %}
-    </div>
-    <div class="sidebar-content">
-        <div id="nav_btn">
-            <button id="signup">Sign up</button>
-            <button id="login">Login</button>
+        <div class="btn">
+            <button class="close">CLOSE</button>
         </div>
     </div>
-    <div class="btn">
-        <button class="close">CLOSE</button>
+    
+        {% block body %}
+        {% endblock %}
+    
+    <div id="footer">
+        <div class="footer_placement">
+            <div id="footer_info">
+            <p>Email: admin@gmail.com</p>
+            <p>Phone: +47 12 34 56 78</p>
+            <p>Adress: Scary street 13</p>
+            </div>
+        
+            <div>
+                <img src="../static/Logo/White/DreadThreadsLogo_Full_White.svg" alt="" id="footer_logo">
+            </div>
+        </div>
     </div>
 </div>
-
-    {% block body %}
-    {% endblock %}
 </body>
 <script src="../static/javascript/script.js"></script>
 </html>

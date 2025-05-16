@@ -28,7 +28,7 @@ def is_valid_email(email):
 @app.route('/')
 def root():
     name = session.get('name')
-    return render_template('base.html', name=name)
+    return render_template('index.html', name=name)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():

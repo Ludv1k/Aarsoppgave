@@ -20,3 +20,11 @@ document.getElementById('openSidebar').addEventListener('click', () => {
 document.querySelector('.cartTab .close').addEventListener('click', () => {
     document.body.classList.remove('showCart');
 });
+
+
+let logo_nav_home = document.getElementById("logo_nav")
+logo_nav_home.addEventListener("click", nav_home)
+
+function nav_home() {
+    location.href = '/'
+}

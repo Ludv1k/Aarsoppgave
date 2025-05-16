@@ -4,13 +4,16 @@ body {
     color: white;
 }
 
+html, body {
+    height: 100%;
+}
+
 .cartTab {
     width: 20vw;
     background-color: #273146;
     color: #eee;
     position: fixed;
-    /* inset: 0 -20vw 0 auto; */
-    inset: 0 0 0 auto; /* DELETE THIS LINE AND UNCOMMENT THE ONE ABOVE*/
+    inset: 0 -20vw 0 auto;
     display: flex;
     flex-direction: column;
     transition: inset 0.5s;
@@ -60,8 +63,20 @@ body.showCart .cartTab {
     margin-left: 2vw;
 }
 
+#log_sign_btn {
+    width: 16vw;
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+}
+#log_sign_btn button {
+    border: none;
+    width: 4vw;
+    height: 3vh;
+}
+
 #header {
-    background-color: #2f382a92;
+    background-color: #273146;
     width: 100%;
     height: 13vh;
 
@@ -83,4 +98,60 @@ body.showCart .cartTab {
     height: 12vh;
     width: auto;
     color: white;
+}
+
+#logo_nav {
+    cursor: pointer;
+}
+
+.front_page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 2vh;
+}
+
+.front_page_img {
+    width: 70vw;
+    height: auto;
+}
+
+#footer {
+    height: 25vh;
+    width: 100%;
+    background-color: #080710;
+
+    position: relative;
+    margin-top: auto;
+
+    display: flex;
+    justify-content: center;
+
+}
+
+.footer_placement {
+    margin-top: 3vh;
+
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+}
+
+#footer_info {
+    display: flex;
+    flex-direction: column;
+}
+
+#footer_logo {
+    height: 15vh;
+    width: auto;
+}
+
+.wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
 }
