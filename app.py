@@ -9,8 +9,7 @@ app.secret_key = 'your_secret_key'
 
 def connect_db():
     return pymysql.connect(
-        host="192.168.86.33",
-        # host="10.2.2.138",
+        host="localhost",
         user="admin",
         password="strongpassword",
         database="dreadthreads",
@@ -82,6 +81,21 @@ def logout():
     session.clear()
     flash('You have been logged out', 'info')
     return redirect(url_for('root'))
+
+@app.route('/products')
+def products():
+    try:
+        conn = connect_db()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)  # Dict format for easy access in HTML
+        cursor.execute("SELECT * FROM products")
+        product_list = cursor.fetchall()
+        cursor.close()
+        conn.close()
+    except Exception as e:
+        print(f"Error fetching products: {e}")
+        product_list = []
+
+    return render_template('products.html', products=product_list)
 
 # Run the Flask app
 if __name__ == '__main__':

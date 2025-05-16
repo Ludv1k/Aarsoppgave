@@ -155,3 +155,27 @@ body.showCart .cartTab {
     display: flex;
     flex-direction: column;
 }
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.product-card {
+    background-color: #1e1e2f;
+    color: white;
+    padding: 1rem;
+    width: 200px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
