@@ -2,15 +2,15 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import pymysql #type: ignore
 import hashlib
 import re
-from config import db_config
+from config import db_config, secret_key
 
 # Create the Flask app
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = secret_key
 
 
 conn = pymysql.connect(**db_config)
-cursor = conn.cursor(dictionary=True)
+cursor = conn.cursor(pymysql.cursors.DictCursor)
 
 
 def hash_password(password):
@@ -81,6 +81,8 @@ def logout():
 
 @app.route('/products')
 def products():
+    print("SESSION:", session)
+    name = session.get('name')  # Even if not used in template
     try:
         conn = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
         cursor = conn.cursor()
@@ -92,7 +94,7 @@ def products():
         print(f"Error fetching products: {e}")
         product_list = []
 
-    return render_template('products.html', products=product_list)
+    return render_template('products.html', products=product_list, name=name)
 
 # Run the Flask app
 if __name__ == '__main__':

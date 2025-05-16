@@ -28,3 +28,10 @@ logo_nav_home.addEventListener("click", nav_home)
 function nav_home() {
     location.href = '/'
 }
+
+let nav_products_btn = document.getElementById("nav_products_btn")
+nav_products_btn.addEventListener("click", nav_products)
+
+function nav_products() {
+    location.href = '/products'
+}
