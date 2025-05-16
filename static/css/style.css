@@ -134,10 +134,9 @@ body.showCart .cartTab {
 .footer_placement {
     margin-top: 3vh;
 
-    width: 20%;
+    width: 20vw;
     display: flex;
     justify-content: space-between;
-    /* align-items: center; */
 }
 
 #footer_info {
