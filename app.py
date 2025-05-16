@@ -2,19 +2,16 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import pymysql #type: ignore
 import hashlib
 import re
+from config import db_config
 
 # Create the Flask app
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-def connect_db():
-    return pymysql.connect(
-        host="localhost",
-        user="admin",
-        password="strongpassword",
-        database="dreadthreads",
-        cursorclass=pymysql.cursors.DictCursor
-    )
+
+conn = pymysql.connect(**db_config)
+cursor = conn.cursor(dictionary=True)
+
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -41,7 +38,7 @@ def signup():
 
         hashed_pw = hash_password(password)
 
-        db = connect_db()
+        db = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
         with db.cursor() as cursor:
             sql = "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)"
             cursor.execute(sql, (name, email, hashed_pw))
@@ -59,7 +56,7 @@ def login():
         password = request.form['password']
         hashed_pw = hash_password(password)
 
-        db = connect_db()
+        db = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
         with db.cursor() as cursor:
             sql = "SELECT name FROM users WHERE email = %s AND password = %s"
             cursor.execute(sql, (email, hashed_pw))
@@ -85,8 +82,8 @@ def logout():
 @app.route('/products')
 def products():
     try:
-        conn = connect_db()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)  # Dict format for easy access in HTML
+        conn = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
+        cursor = conn.cursor()
         cursor.execute("SELECT * FROM products")
         product_list = cursor.fetchall()
         cursor.close()
