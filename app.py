@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import pymysql #type: ignore
 import hashlib
 import re
+
+import pymysql.cursors
 from config import db_config, secret_key
 from functools import wraps
 
@@ -19,6 +21,15 @@ def login_required(f):
         if 'name' not in session:
             flash("You must belogged in to access that page", "warning")
             return redirect(url_for('login_or_signup'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('admin') != 'Yes':
+            flash("Admin access required.", "danger")
+            return redirect(url_for('root'))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -51,8 +62,8 @@ def signup():
 
         db = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
         with db.cursor() as cursor:
-            sql = "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)"
-            cursor.execute(sql, (name, email, hashed_pw))
+            sql = "INSERT INTO users (name, email, password, admin) VALUES (%s, %s, %s, %s)"
+            cursor.execute(sql, (name, email, hashed_pw, 'No'))
             db.commit()
         db.close()
 
@@ -69,13 +80,14 @@ def login():
 
         db = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
         with db.cursor() as cursor:
-            sql = "SELECT name FROM users WHERE email = %s AND password = %s"
+            sql = "SELECT name, admin FROM users WHERE email = %s AND password = %s"
             cursor.execute(sql, (email, hashed_pw))
             user = cursor.fetchone()
         db.close()
         
         if user:
             session['name'] = user['name']
+            session['admin'] = user['admin']
             flash("Login successful!", "success")
             return redirect(url_for('root'))
         else:
@@ -111,6 +123,26 @@ def products():
         product_list = []
 
     return render_template('products.html', products=product_list, name=name)
+
+@app.route('/add_product', methods=['POST'])
+@admin_required
+@login_required
+def add_product():
+    product_name = request.form['product_name']
+    description = request.form['description']
+    price = request.form['price']
+    image_filename = request.form['image_url']
+    image_url = f"static/product_img/{image_filename}"
+
+    db = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
+    with db.cursor() as cursor:
+        sql = "INSERT INTO products (product_name, description, price, image_url) VALUES (%s, %s, %s, %s)"
+        cursor.execute(sql, (product_name, description, price, image_url))
+        db.commit()
+    db.close()
+
+    flash("Product added!", "success")
+    return redirect(url_for('products'))
 
 # Run the Flask app
 if __name__ == '__main__':
