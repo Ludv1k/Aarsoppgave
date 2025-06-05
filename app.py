@@ -3,6 +3,7 @@ import pymysql #type: ignore
 import hashlib
 import re
 from config import db_config, secret_key
+from functools import wraps
 
 # Create the Flask app
 app = Flask(__name__)
@@ -12,6 +13,14 @@ app.secret_key = secret_key
 conn = pymysql.connect(**db_config)
 cursor = conn.cursor(pymysql.cursors.DictCursor)
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'name' not in session:
+            flash("You must belogged in to access that page", "warning")
+            return redirect(url_for('login_or_signup'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -23,8 +32,10 @@ def is_valid_email(email):
 # Create route
 @app.route('/')
 def root():
-    name = session.get('name')
-    return render_template('index.html', name=name)
+    if 'name' not in session:
+        return redirect(url_for('login_or_signup'))
+    return render_template('index.html', name=session['name'])
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -79,7 +90,12 @@ def logout():
     flash('You have been logged out', 'info')
     return redirect(url_for('root'))
 
+@app.route('/login_or_signup')
+def login_or_signup():
+    return render_template('login_or_signup.html')
+
 @app.route('/products')
+@login_required
 def products():
     print("SESSION:", session)
     name = session.get('name')  # Even if not used in template
