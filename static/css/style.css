@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
     background-color: #0f0d1f;
     color: white;
 }
@@ -75,6 +76,21 @@ body.showCart .cartTab {
     height: 3vh;
 }
 
+#nav_products_btn {
+    height: 100%;
+    width: 8vw;
+
+    background-color: #0f0d1f;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+
+
 #header {
     background-color: #273146;
     width: 100%;
@@ -88,6 +104,7 @@ body.showCart .cartTab {
 
 .header_placement {
     width: 50%;
+    height: 100%;
     
     display: flex;
     justify-content: space-between;
@@ -177,4 +194,50 @@ body.showCart .cartTab {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
+}
+
+.signlog_center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signlog_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 30vw;
+    height: 65vh;
+    background-image: url(../images/torn\ edges\ paper.svg);
+    background-repeat: no-repeat; 
+    background-size: 100% 100%;
+    margin: 2.5%;
+}
+
+.signlog_content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    margin-bottom: 1rem;
+}
+
+.form-row label {
+    width: 30%;
+    text-align: right;
+    margin-right: 1rem;
+}
+
+.form-row input {
+    width: 60%;
 }

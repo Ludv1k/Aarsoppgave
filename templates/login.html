@@ -1,12 +1,23 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1>Login</h1>
+<div class="signlog_center">
+    <div class="signlog_box">
+        <h1>Login</h1>
 
-<form method="POST">
-    <label>Email:</label>
-    <input type="email" name="email" required><br>
-    <label>Password:</label>
-    <input type="password" name="password" required><br>
-    <input type="submit" value="Login">
-</form>
+        <form method="POST" class="signlog_content">
+            <div class="form-row">
+                <label for="email">Email:</label>
+                <input type="email" name="email" required>
+            </div>
+            
+            <div class="form-row">
+                <label for="password">Password:</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</div>
+
 {% endblock %}
