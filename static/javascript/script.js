@@ -1,13 +1,15 @@
 let login = document.getElementById("login")
-login.addEventListener("click", login_page)
-function login_page() {
-    location.href = '/login'
+if (login) {
+    login.addEventListener("click", function () {
+        location.href = '/login';
+    });
 }
 
 let signup = document.getElementById("signup")
-signup.addEventListener("click", signup_page)
-function signup_page() {
-    location.href = '/signup'
+if (signup) {
+    signup.addEventListener("click", function () {
+        location.href = '/signup';
+    });
 }
 
 document.getElementById('openSidebar').addEventListener('click', () => {
