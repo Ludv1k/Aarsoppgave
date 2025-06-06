@@ -302,3 +302,41 @@ body.showCart .cartTab {
     padding-top: 1vh;
     padding-bottom: 1vh;
 }
+
+.product_header {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product_h_content {
+    width: 50vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.product_h_content button {
+    /* height: 5vh;
+    width: auto; */
+    padding: 2.5vh;
+
+    border: none;
+
+    background-color: #1e1e2f;
+    color: white;
+}
+
+#popup_btn_cls {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    height: 4vh;
+    width: 2vw;
+    border: none;
+    background-color: rgb(250, 57, 57);
+}

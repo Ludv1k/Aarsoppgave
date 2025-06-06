@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1>Our Products</h1>
+<div class="product_header">
+    <div class="product_h_content">
+        <h1>Our Products</h1>
+
+        {% if session.admin == 'Yes' %}
+            <!-- Trigger Button -->
+            <button id="popup_btn_opn">Open Popup</button>
+        {% endif %}
+    </div>
+
+</div>
+
     <div class="product-grid">
         {% for product in products %}
             <div class="product-card">
@@ -13,12 +24,13 @@
     </div>
 
     {% if session.admin == 'Yes' %}
-        <!-- Trigger Button -->
-        <button id="popup_btn">Open Popup</button>
+
 
         <!-- Popup Content -->
         <div class="popup" id="popup">
-            <h1>Add your product</h1>
+               <h1>Add your product</h1>
+               <button id="popup_btn_cls">X</button> 
+            
             <form action="{{ url_for('add_product') }}" method="POST" class="popup_content">
                 <div class="add_product_info">
                     <label for="product_name">Product name:</label>

@@ -35,9 +35,14 @@ function nav_products() {
 
 // DELETE BELOW
 
-let popup = document.getElementById("popup_btn");
-popup.addEventListener("click", openPopup);
+let popup_opn = document.getElementById("popup_btn_opn");
+popup_opn.addEventListener("click", openPopup);
 
 function openPopup() {
     document.getElementById("popup").classList.add("open-popup");
+}
+let popup_cls = document.getElementById("popup_btn_cls")
+popup_cls.addEventListener("click", closePopup)
+function closePopup() {
+    document.getElementById("popup").classList.remove("open-popup");
 }
