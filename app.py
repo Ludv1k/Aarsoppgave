@@ -144,6 +144,43 @@ def add_product():
     flash("Product added!", "success")
     return redirect(url_for('products'))
 
+@app.route('/add_to_cart', methods=['POST'])
+@login_required
+def add_to_cart():
+    product_id = request.form.get('product_id')
+
+    db = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
+    with db.cursor() as cursor:
+        cursor.execute("SELECT * FROM products WHERE id = %s", (product_id))
+        product = cursor.fetchone()
+    db.close()
+
+    if not product:
+        flash("Product not found", "danger")
+        return redirect(url_for('products'))
+    
+    if 'cart' not in session:
+        session['cart'] = []
+
+    cart = session['cart']
+    cart.append({
+        'id': product['id'],
+        'name': product['product_name'],
+        'price': product['price'],
+        'image_url': product['image_url']
+    })
+    session['cart'] = cart
+    flash(f"{product['product_name']} added to cart!", "success")
+
+    return redirect(url_for('products'))
+
+@app.route('/cart')
+@login_required
+def view_cart():
+    cart = session.get('cart', [])
+    total = sum(float(item['price']) for item in cart)
+    return render_template('cart.html', cart=cart, total=total, name=session['name'])
+
 # Run the Flask app
 if __name__ == '__main__':
     # Set the app to be accessible on the network

@@ -33,6 +33,12 @@ function nav_products() {
     location.href = '/products'
 }
 
+let cart_btn = document.getElementById("cart_btn")
+cart_btn.addEventListener("click", nav_cart)
+function nav_cart() {
+    location.href = '/products'
+}
+
 // DELETE BELOW
 
 let popup_opn = document.getElementById("popup_btn_opn");

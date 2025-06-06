@@ -6,7 +6,14 @@
 - flask
 - pymysql
 
-------------------
-# Dread Threads
+---
+## Dread Threads
 ###### This is a proof of concept
 
+
+---
+## Brukerstøtte
+### - Kontrast:
+- God kontrast mellom bakgrunnsfarge og skriftsfarge.
+
+### - 

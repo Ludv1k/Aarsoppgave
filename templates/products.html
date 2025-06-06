@@ -9,22 +9,9 @@
             <button id="popup_btn_opn">Open Popup</button>
         {% endif %}
     </div>
-
 </div>
 
-    <div class="product-grid">
-        {% for product in products %}
-            <div class="product-card">
-                <img src="{{ product.image_url }}" alt="{{ product.product_name }}">
-                <h2>{{ product.product_name }}</h2>
-                <p>{{ product.description }}</p>
-                <p><strong>${{ product.price }}</strong></p>
-            </div>
-        {% endfor %}
-    </div>
-
     {% if session.admin == 'Yes' %}
-
 
         <!-- Popup Content -->
         <div class="popup" id="popup">
@@ -57,6 +44,25 @@
             </form>
         </div>
     {% endif %}
+
+    <div class="product-grid">
+        {% for product in products %}
+            <div class="product-card">
+                <img src="{{ product.image_url }}" alt="{{ product.product_name }}">
+                <h2>{{ product.product_name }}</h2>
+                <p>{{ product.description }}</p>
+                <p><strong>${{ product.price }}</strong></p>
+
+                <form action="{{ url_for('add_to_cart') }}" method="POST">
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
 
 
 {% endblock %}

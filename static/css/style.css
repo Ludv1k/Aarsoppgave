@@ -98,7 +98,7 @@ body.showCart .cartTab {
     height: 3vh;
 }
 
-#nav_products_btn {
+.cart_product_btn {
     height: 100%;
     width: 8vw;
 
@@ -109,9 +109,19 @@ body.showCart .cartTab {
     align-items: center;
 
     cursor: pointer;
+
+    transition: 0.5s;
+}
+.cart_product_btn:hover {
+    background-color: whitesmoke;
+    color: #0f0d1f;
 }
 
-
+.nav_btn {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
 
 #header {
     background-color: #273146;
@@ -244,6 +254,17 @@ body.showCart .cartTab {
     align-items: center;
     flex-direction: column;
     width: 100%;
+}
+
+.signlog_btn {
+    border: none;
+    border-style: solid;
+    border-color: white;
+    width: 7vw;
+    height: 5vh;
+
+    background-color: #1e1e2f;
+    color: white;
 }
 
 .form-row {
