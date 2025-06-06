@@ -10,10 +10,4 @@
 ## Dread Threads
 ###### This is a proof of concept
 
-
----
-## Brukerstøtte
-### - Kontrast:
-- God kontrast mellom bakgrunnsfarge og skriftsfarge.
-
-### - 
+Dread Threads is a clothes shop for those who might like some spookier alternatives when it comes to their clothes.
