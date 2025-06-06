@@ -117,6 +117,12 @@ body.showCart .cartTab {
     color: #0f0d1f;
 }
 
+.add_to_cart_btn {
+    border: none;
+    width: 7vw;
+    height: 5vh;
+}
+
 .nav_btn {
     display: flex;
     flex-direction: row;
