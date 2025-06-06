@@ -80,12 +80,13 @@ def login():
 
         db = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
         with db.cursor() as cursor:
-            sql = "SELECT name, admin FROM users WHERE email = %s AND password = %s"
+            sql = "SELECT id, name, admin FROM users WHERE email = %s AND password = %s"
             cursor.execute(sql, (email, hashed_pw))
             user = cursor.fetchone()
         db.close()
         
         if user:
+            session['id'] = user['id']
             session['name'] = user['name']
             session['admin'] = user['admin']
             flash("Login successful!", "success")
@@ -148,38 +149,48 @@ def add_product():
 @login_required
 def add_to_cart():
     product_id = request.form.get('product_id')
+    user_id = session.get('id')
 
     db = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
     with db.cursor() as cursor:
         cursor.execute("SELECT * FROM products WHERE id = %s", (product_id))
         product = cursor.fetchone()
+        if not product:
+            flash("Product not found", "danger")
+            return redirect(url_for('products'))
+        
+        cursor.execute("SELECT * FROM cart_items WHERE user_id = %s AND product_id = %s", (user_id, product_id))
+        existing = cursor.fetchone()
+        if existing:
+            cursor.execute("UPDATE cart_items SET quantity = quantity + 1 WHERE id = %s", (existing['id'],))
+        else:
+            cursor.execute("INSERT INTO cart_items (user_id, product_id, quantity) VALUES (%s, %s, %s)", (user_id, product_id, 1))
+
+        db.commit()
     db.close()
 
-    if not product:
-        flash("Product not found", "danger")
-        return redirect(url_for('products'))
-    
-    if 'cart' not in session:
-        session['cart'] = []
-
-    cart = session['cart']
-    cart.append({
-        'id': product['id'],
-        'name': product['product_name'],
-        'price': product['price'],
-        'image_url': product['image_url']
-    })
-    session['cart'] = cart
     flash(f"{product['product_name']} added to cart!", "success")
-
     return redirect(url_for('products'))
 
 @app.route('/cart')
 @login_required
 def view_cart():
-    cart = session.get('cart', [])
-    total = sum(float(item['price']) for item in cart)
-    return render_template('cart.html', cart=cart, total=total, name=session['name'])
+    user_id = session.get('id')
+    db = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
+    with db.cursor() as cursor:
+        sql = """
+            SELECT p.product_name, p.price, p.image_url, c.quantity
+            FROM cart_items c
+            JOIN products p ON c.product_id = p.id
+            WHERE c.user_id = %s
+        """
+        cursor.execute(sql, (user_id,))
+        cart_items = cursor.fetchall()
+    db.close()
+
+    total = sum(float(item['price']) * item['quantity'] for item in cart_items)
+
+    return render_template('cart.html', cart=cart_items, total=total, name=session['name'])
 
 # Run the Flask app
 if __name__ == '__main__':

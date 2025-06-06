@@ -36,7 +36,7 @@ function nav_products() {
 let cart_btn = document.getElementById("cart_btn")
 cart_btn.addEventListener("click", nav_cart)
 function nav_cart() {
-    location.href = '/products'
+    location.href = '/cart'
 }
 
 // DELETE BELOW

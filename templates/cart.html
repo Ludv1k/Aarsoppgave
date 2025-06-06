@@ -6,8 +6,8 @@
     <ul>
         {% for item in cart %}
             <li>
-                <img src="{{ item.image_url }}" alt="{{ item.name }}" width="50">
-                {{ item.name }} - ${{ item.price }}
+                <img src="{{ item.image_url }}" width="50">
+                {{ item.product_name }} x{{ item.quantity }} - ${{ item.price }}
             </li>
         {% endfor %}
     </ul>
