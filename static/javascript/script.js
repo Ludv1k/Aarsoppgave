@@ -32,3 +32,12 @@ nav_products_btn.addEventListener("click", nav_products)
 function nav_products() {
     location.href = '/products'
 }
+
+// DELETE BELOW
+
+let popup = document.getElementById("popup_btn");
+popup.addEventListener("click", openPopup);
+
+function openPopup() {
+    document.getElementById("popup").classList.add("open-popup");
+}

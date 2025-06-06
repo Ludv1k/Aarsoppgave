@@ -13,12 +13,38 @@
     </div>
 
     {% if session.admin == 'Yes' %}
-        <form action="{{ url_for('add_product') }}" method="POST">
-            <input type="text" name="product_name" placeholder="Product Name" required>
-            <input type="text" name="description" placeholder="Description" required>
-            <input type="number" name="price" placeholder="Price" required>
-            <input type="text" name="image_url" placeholder="Image filename" required>
-            <button type="submit">Add Product</button>
-        </form>
+        <!-- Trigger Button -->
+        <button id="popup_btn">Open Popup</button>
+
+        <!-- Popup Content -->
+        <div class="popup" id="popup">
+            <h1>Add your product</h1>
+            <form action="{{ url_for('add_product') }}" method="POST" class="popup_content">
+                <div class="add_product_info">
+                    <label for="product_name">Product name:</label>
+                    <input type="text" name="product_name" placeholder="Product Name" required>
+                </div>
+                
+                <div class="add_product_info">
+                    <label for="description">Item description:</label>
+                    <input type="text" name="description" placeholder="Description" required>
+                </div>
+                
+                <div class="add_product_info">
+                    <label for="price">Price:</label>
+                    <input type="number" name="price" placeholder="Price" required>
+                </div>
+
+                <div class="add_product_info">
+                    <label for="image_url">Image filename:</label>
+                    <input type="text" name="image_url" placeholder="Image filename" required>
+                </div>
+
+                
+                <button type="submit">Add Product</button>
+            </form>
+        </div>
     {% endif %}
+
+
 {% endblock %}
